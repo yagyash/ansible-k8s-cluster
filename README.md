@@ -15,11 +15,13 @@ ansible-k8s-cluster/
 
 ├── playbooks/
 
-│ ├── common.yml # Common setup for all nodes
+│ ├── common_config.yml # Common setup for all nodes
 
-│ ├── masters.yml # Kubernetes master setup
+│ ├── masters_config.yml # Kubernetes master setup
 
-│ └── workers.yml # Kubernetes worker setup
+│ └── workers_config.yml # Kubernetes worker setup
+
+│ └── cni_plugin.yml # Calico setup
 
 ├── README.md
 
@@ -32,4 +34,11 @@ ansible-k8s-cluster/
 - Ubuntu 24.04 / 24.04 servers (or compatible Linux)
 - At least **2 CPUs & 2GB RAM per node**
 - SSH access with `sudo` privileges
-- Python 3 + Ansible installed on another server or on controlplane 
+- Python 3 + Ansible installed on another server or on controlplane
+
+  ## For Deployment.
+
+- ansible-playbook -i inventory/inventory.ini playbooks/common_config.yml
+- ansible-playbook -i inventory/inventory.ini playbooks/master_config.yml
+- ansible-playbook -i inventory/inventory.ini playbooks/cni_plugin.yml
+- ansible-playbook -i inventory/inventory.ini playbooks/worker_plugin.yml
