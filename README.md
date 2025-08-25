@@ -1,6 +1,6 @@
 # 🚀 Kubernetes Cluster Deployment with Ansible
 
-This project automates the deployment of a **highly available Kubernetes cluster** using **Ansible**.  
+This project automates the deployment of a **Kubernetes cluster** using **Ansible**.  
 It supports multiple masters and worker nodes, with container runtime and CNI plugin (Calico) setup.
 
 ---
