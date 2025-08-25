@@ -8,13 +8,21 @@ It supports multiple masters and worker nodes, with container runtime and CNI pl
 ## 📂 Project Structure
 
 ansible-k8s-cluster/
+
 ├── inventory/
+
 │ └── inventory.ini # Hosts file (masters & workers)
+
 ├── playbooks/
+
 │ ├── common.yml # Common setup for all nodes
+
 │ ├── masters.yml # Kubernetes master setup
+
 │ └── workers.yml # Kubernetes worker setup
+
 ├── README.md
+
 └── .gitignore
 
 ---
