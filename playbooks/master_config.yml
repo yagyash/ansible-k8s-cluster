@@ -1,17 +1,5 @@
 ---
- - name: Initialize master for k8s
-   hosts: masters
+ - hosts: masters
    become: true
-   tasks:
-     - name: initialize master
-       command: kubeadm init --pod-network-cidr=10.240.0.0/16 --ignore-preflight-errors=NumCPU --ignore-preflight-errors=Mem
-       register: kubeadm_init
-       args:
-         creates: /etc/kubernetes/admin.conf
-     
-     - name: Configure kubectl
-       shell: |
-        mkdir -p $HOME/.kube
-        cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-        chown $(id -u):$(id -g) $HOME/.kube/config
-     
+   roles:
+     - master

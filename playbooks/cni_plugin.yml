@@ -1,28 +1,5 @@
 ---
- - name: Initialize master for k8s
-   hosts: masters
+ - hosts: masters
    become: true
-   tasks:
-     - name: Setup CNI plugin calico
-       get_url:
-         url: "{{item.url}}"
-         dest: "{{item.dest}}"
-         mode: 
-       loop:
-         - {url: "https://raw.githubusercontent.com/projectcalico/calico/v3.30.2/manifests/operator-crds.yaml", dest: "/tmp/operator-crds.yaml"}
-         - {url: "https://raw.githubusercontent.com/projectcalico/calico/v3.30.2/manifests/tigera-operator.yaml", dest: "/tmp/tigera-operator.yaml"}
-         - {url: "https://raw.githubusercontent.com/projectcalico/calico/v3.30.2/manifests/custom-resources.yaml", dest: "/tmp/custom-resources.yaml"}
-
-     - name: Update in custom resource file
-       replace:
-         path: /tmp/custom-resources.yaml
-         regexp: 192.168.0.0/16
-         replace: 10.240.0.0/16
-
-     - name: Apply cni yamls
-       shell: |
-         kubectl apply -f /tmp/operator-crds.yaml
-         kubectl apply -f /tmp/tigera-operator.yaml
-         kubectl apply -f /tmp/custom-resources.yaml
-
-
+   roles:
+     - cni_plugin

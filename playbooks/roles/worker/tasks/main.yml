@@ -1,0 +1,6 @@
+---
+     - name: Join workers
+       command: "{{hostvars[groups['masters'][0]].join_cmd }}"
+  
+            
+
