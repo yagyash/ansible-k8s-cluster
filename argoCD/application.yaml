@@ -11,7 +11,7 @@ spec:
     path: argoCD
   destination:
     server: https://kubernetes.default.svc
-    namespace: argoCD-testing
+    namespace: argocd-testing
 
   syncPolicy:
     syncOptions:
