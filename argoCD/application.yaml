@@ -10,7 +10,7 @@ spec:
     targetRevision: HEAD
     path: argoCD
   destination:
-    server: https://192.168.85.149:6443
+    server: https://kubernetes.default.svc
     namespace: argoCD-testing
 
   syncPolicy:
