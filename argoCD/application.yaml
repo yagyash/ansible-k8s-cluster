@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/yagyash/ansible-k8s-cluster.git
-    targetRevision: dev
+    targetRevision: HEAD
     path: argoCD
   destination:
     server: https://kubernetes.default.svc
