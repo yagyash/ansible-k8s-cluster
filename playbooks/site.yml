@@ -1,4 +1,4 @@
-import_playbook: common_config.yml
-import_playbook: master_config.yml
-import_playbook: cni_plugin.yml
-import_playbook: worker_config.yml
+- import_playbook: common_config.yml
+- import_playbook: master_config.yml
+- import_playbook: cni_plugin.yml
+- import_playbook: worker_config.yml

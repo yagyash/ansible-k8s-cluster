@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocdproject-testing
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/yagyash/ansible-k8s-cluster.git
+    targetRevision: HEAD
+    path: argoCD
+  destination:
+    server: https://192.168.85.149:6443
+    namespace: argoCD-testing
+
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+
+  automated:
+    selfHeal: true
+    prune: true
