@@ -20,7 +20,7 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
-    app: mailserver
+    app: webserver
   sessionAffinity: None
   type: NodePort
 status:
