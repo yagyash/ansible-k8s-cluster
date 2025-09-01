@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: webserver
+    app: mailserver
   name: mailserver
   namespace: default
 spec:
@@ -13,7 +13,7 @@ spec:
   template:
     metadata:
       labels:
-        app: webserver
+        app: mailserver
     spec:
       containers:
       - image: yagya123/mailserver
