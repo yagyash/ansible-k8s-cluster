@@ -1,0 +1,13 @@
+---
+- hosts: all
+  gather_facts: yes
+  become: yes
+  tasks:
+
+    - name: Configure passwordless sudo for Ansible user
+      copy:
+        dest: "/etc/sudoers.d/{{ ansible_user }}"
+        content: "{{ ansible_user }} ALL=(ALL) NOPASSWD:ALL"
+        owner: root
+        group: root
+        mode: '0440'

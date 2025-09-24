@@ -1,8 +1,9 @@
 ---
      - name: Join workers
-       command: "{{hostvars[groups['masters'][0]].join_cmd }}"
+       command: "{{ hostvars[groups['masters'][0]].join_cmd }}"
        args:
          creates: /etc/kubernetes/kubelet.conf
+       when: hostvars[groups['masters'][0]].join_cmd is defined
   
             
 

@@ -13,8 +13,6 @@
         owner: root
         group: root
         mode: '0644'
-      notify:
-        - Restart haproxy
 
     - name: Ensure HAProxy is enabled and running
       systemd:

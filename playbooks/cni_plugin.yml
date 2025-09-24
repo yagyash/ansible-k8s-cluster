@@ -1,5 +1,5 @@
 ---
- - hosts: masters
+ - hosts: master01
    become: true
    roles:
      - cni_plugin
