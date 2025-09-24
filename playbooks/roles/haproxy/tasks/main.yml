@@ -7,23 +7,18 @@
         update_cache: yes
  
     - name: Configure HAProxy for Kubernetes API
-        template:
-           src: haproxy.cfg.j2
-           dest: /etc/haproxy/haproxy.cfg
-           owner: root
-           group: root
-           mode: '0644'
-        notify:
-          - Restart haproxy
+      template:
+        src: haproxy.cfg.j2
+        dest: /etc/haproxy/haproxy.cfg
+        owner: root
+        group: root
+        mode: '0644'
+      notify:
+        - Restart haproxy
 
     - name: Ensure HAProxy is enabled and running
-         systemd:
-           name: haproxy
-           state: started
-           enabled: yes
-
-  handlers:
-    - name: Restart haproxy
       systemd:
         name: haproxy
-        state: restarted
+        state: started
+        enabled: yes
+
