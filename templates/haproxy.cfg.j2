@@ -1,0 +1,14 @@
+frontend kubernetes-apiserver
+    bind *:6443
+    mode tcp
+    option tcplog
+    default_backend kubernetes-masters
+
+backend kubernetes-masters
+    mode tcp
+    balance roundrobin
+    option tcp-check
+    server master01 192.168.85.149:6443 check fall 3 rise 2
+    server master02 192.168.85.154:6443 check fall 3 rise 2
+    server master03 192.168.85.155:6443 check fall 3 rise 2
+

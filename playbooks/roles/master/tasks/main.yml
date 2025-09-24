@@ -1,9 +1,10 @@
 ---
      - name: initialize master
-       command: kubeadm init --pod-network-cidr=10.240.0.0/16 --ignore-preflight-errors=NumCPU --ignore-preflight-errors=Mem
+       command: kubeadm init --control-plane-endpoint "{{ lb_ip }}:6443" --pod-network-cidr=10.240.0.0/16 --ignore-preflight-errors=NumCPU --ignore-preflight-errors=Mem
        register: kubeadm_init
        args:
          creates: /etc/kubernetes/admin.conf
+       when: inventory_hostname == group['master'][0]
      
      - name: Configure kubectl
        shell: |
@@ -12,10 +13,38 @@
         chown $(id -u):$(id -g) $HOME/.kube/config
        args:
          creates: $HOME/.kube/config
+       when: inventory_hostname == group['master'][0]
+     
+     - name: upload certs to additional master
+       command: kubeadm init phase upload-certs --upload-certs
+       register: cert_key
+       when: inventory_hostname == group['master'][0]
+
+     - name: Extract cert key
+      set_fact:
+        cert_key: "{{ cert_key.stdout_lines[-1].split()[-1] }}"
+      when: inventory_hostname == groups['masters'][0]
     
      - name: kubeadm join command
        command: kubeadm token create --print-join-command
        register: join_command
+       when: inventory_hostname == group['master'][0]
+
+     - name: Generate kubeadm join command (with control-plane)
+      command: kubeadm token create --print-join-command --ttl 0
+      register: join_command
+      when: inventory_hostname == groups['master'][0]
+
+    - name: Save join command and cert key to all hosts
+      set_fact:
+        master_join_cmd: "{{ hostvars[groups['master'][0]].join_command.stdout }} --control-plane --certificate-key {{ hostvars[groups['master'][0]].cert_key }}"
+      when: inventory_hostname != groups['master'][0]
+
+    - name: Join node to control-plane (on other masters)
+      command: "{{ master_join_cmd }}"
+      args:
+        creates: /etc/kubernetes/kubelet.conf
+      when: inventory_hostname != groups['master'][0]    
 
      - name: Save the join command
        set_fact:
